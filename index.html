@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mind Reader Pro</title>
+
+<style>
+body {
+    text-align: center;
+    font-family: Arial;
+    background: linear-gradient(to right, #000428, #004e92);
+    color: white;
+}
+
+.box {
+    margin-top: 100px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+<h1>🧠 Mind Reader Pro</h1>
+<p>Think of a number between 1-100</p>
+
+<button onclick="start()">Start</button>
+
+<div id="game" style="display:none;">
+    <p id="guess"></p>
+    <p id="attempts"></p>
+
+    <button onclick="higher()">Higher</button>
+    <button onclick="correct()">Correct</button>
+    <button onclick="lower()">Lower</button>
+</div>
+</div>
+
+<script>
+let low = 1;
+let high = 100;
+let mid;
+let tries = 0;
+let maxTries = 7; // limit attempts
+
+function start() {
+    document.getElementById("game").style.display = "block";
+    tries = 0;
+    low = 1;
+    high = 100;
+    nextGuess();
+}
+
+function nextGuess() {
+    if (tries >= maxTries) {
+        document.getElementById("guess").innerText = "😢 Sorry, I failed!";
+        return;
+    }
+
+    if (low > high) {
+        document.getElementById("guess").innerText = "🤨 Something is wrong!";
+        return;
+    }
+
+    // random guess between range
+    mid = Math.floor(Math.random() * (high - low + 1)) + low;
+
+    tries++;
+    document.getElementById("guess").innerText = "Is it " + mid + "?";
+    document.getElementById("attempts").innerText = "Attempts: " + tries + "/" + maxTries;
+}
+
+function higher() {
+    low = mid + 1;
+    nextGuess();
+}
+
+function lower() {
+    high = mid - 1;
+    nextGuess();
+}
+
+function correct() {
+    document.getElementById("guess").innerText = "😎 I guessed it!";
+}
+</script>
+
+</body>
+</html>
